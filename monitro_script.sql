@@ -16,9 +16,9 @@ CREATE SCHEMA IF NOT EXISTS `monitro` DEFAULT CHARACTER SET utf8 ;
 USE `monitro` ;
 
 -- -----------------------------------------------------
--- Table `monitro`.`Endereco`
+-- Table `monitro`.`endereco`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitro`.`Endereco` (
+CREATE TABLE IF NOT EXISTS `monitro`.`endereco` (
   `idEndereco` INT NOT NULL AUTO_INCREMENT,
   `logradouro` VARCHAR(45) NULL,
   `cep` VARCHAR(45) NULL,
@@ -33,9 +33,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `monitro`.`Empresa`
+-- Table `monitro`.`empresa`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitro`.`Empresa` (
+CREATE TABLE IF NOT EXISTS `monitro`.`empresa` (
   `idEmpresa` INT NOT NULL AUTO_INCREMENT,
   `nomeEmpresa` VARCHAR(45) NULL,
   `CNPJ` CHAR(18) NULL,
@@ -44,9 +44,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `monitro`.`Servidor`
+-- Table `monitro`.`servidor`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitro`.`Servidor` (
+CREATE TABLE IF NOT EXISTS `monitro`.`servidor` (
   `idServidor` INT NOT NULL AUTO_INCREMENT,
   `fkEndereco` INT NOT NULL,
   `sistemaOperacional` VARCHAR(45) NULL,
@@ -57,12 +57,12 @@ CREATE TABLE IF NOT EXISTS `monitro`.`Servidor` (
   INDEX `fk_Servidor_Empresa1_idx` (`fkEmpresa` ASC) VISIBLE,
   CONSTRAINT `fk_Servidor_Endereço1`
     FOREIGN KEY (`fkEndereco`)
-    REFERENCES `monitro`.`Endereco` (`idEndereco`)
+    REFERENCES `monitro`.`endereco` (`idEndereco`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Servidor_Empresa1`
     FOREIGN KEY (`fkEmpresa`)
-    REFERENCES `monitro`.`Empresa` (`idEmpresa`)
+    REFERENCES `monitro`.`empresa` (`idEmpresa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -79,9 +79,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `monitro`.`Usuario`
+-- Table `monitro`.`usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitro`.`Usuario` (
+CREATE TABLE IF NOT EXISTS `monitro`.`usuario` (
   `idUsuario` INT NOT NULL AUTO_INCREMENT,
   `nomeUsuario` VARCHAR(45) NULL,
   `email` VARCHAR(45) NULL,
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `monitro`.`Usuario` (
   INDEX `fk_Usuario_Cargo1_idx` (`fkCargo` ASC) VISIBLE,
   CONSTRAINT `fk_Usuario_Empresa1`
     FOREIGN KEY (`fkEmpresa`)
-    REFERENCES `monitro`.`Empresa` (`idEmpresa`)
+    REFERENCES `monitro`.`empresa` (`idEmpresa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Usuario_Cargo1`
@@ -105,9 +105,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `monitro`.`Sessao`
+-- Table `monitro`.`sessao`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitro`.`Sessao` (
+CREATE TABLE IF NOT EXISTS `monitro`.`sessao` (
   `idSessao` INT NOT NULL AUTO_INCREMENT,
   `dataInicio` DATETIME NULL,
   `dataTermino` DATETIME NULL,
@@ -119,21 +119,21 @@ CREATE TABLE IF NOT EXISTS `monitro`.`Sessao` (
   INDEX `fk_Sessao_Endereço1_idx` (`fkEndereco` ASC) VISIBLE,
   CONSTRAINT `fk_Sessao_Usuario1`
     FOREIGN KEY (`fkUsuario`)
-    REFERENCES `monitro`.`Usuario` (`idUsuario`)
+    REFERENCES `monitro`.`usuario` (`idUsuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Sessao_Endereço1`
     FOREIGN KEY (`fkEndereco`)
-    REFERENCES `monitro`.`Endereco` (`idEndereco`)
+    REFERENCES `monitro`.`endereco` (`idEndereco`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `monitro`.`TipoComponente`
+-- Table `monitro`.`tipoComponente`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitro`.`TipoComponente` (
+CREATE TABLE IF NOT EXISTS `monitro`.`tipoComponente` (
   `idTipoComponente` INT NOT NULL AUTO_INCREMENT,
   `nomeTipo` VARCHAR(45) NULL,
   PRIMARY KEY (`idTipoComponente`))
@@ -141,9 +141,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `monitro`.`Componente`
+-- Table `monitro`.`componente`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitro`.`Componente` (
+CREATE TABLE IF NOT EXISTS `monitro`.`componente` (
   `idComponente` INT NOT NULL AUTO_INCREMENT,
   `fkTipoComponente` INT NOT NULL,
   `fkServidor` INT NOT NULL,
@@ -152,21 +152,21 @@ CREATE TABLE IF NOT EXISTS `monitro`.`Componente` (
   INDEX `fk_Componente_Servidor1_idx` (`fkServidor` ASC) VISIBLE,
   CONSTRAINT `fk_Componente_TipoComponente1`
     FOREIGN KEY (`fkTipoComponente`)
-    REFERENCES `monitro`.`TipoComponente` (`idTipoComponente`)
+    REFERENCES `monitro`.`tipoComponente` (`idTipoComponente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Componente_Servidor1`
     FOREIGN KEY (`fkServidor`)
-    REFERENCES `monitro`.`Servidor` (`idServidor`)
+    REFERENCES `monitro`.`servidor` (`idServidor`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `monitro`.`DescricaoComponente`
+-- Table `monitro`.`descricaoComponente`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitro`.`DescricaoComponente` (
+CREATE TABLE IF NOT EXISTS `monitro`.`descricaoComponente` (
   `idDescricaoComponente` INT NOT NULL AUTO_INCREMENT,
   `tituloDescricao` VARCHAR(45) NULL,
   `descricao` VARCHAR(150) NULL,
@@ -176,16 +176,16 @@ CREATE TABLE IF NOT EXISTS `monitro`.`DescricaoComponente` (
   INDEX `fk_AtributoComponente_Componente1_idx` (`fkTipoComponente_Componente` ASC, `fkComponente` ASC) VISIBLE,
   CONSTRAINT `fk_AtributoComponente_Componente1`
     FOREIGN KEY (`fkTipoComponente_Componente` , `fkComponente`)
-    REFERENCES `monitro`.`Componente` (`fkTipoComponente` , `idComponente`)
+    REFERENCES `monitro`.`componente` (`fkTipoComponente` , `idComponente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `monitro`.`Metrica`
+-- Table `monitro`.`metrica`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitro`.`Metrica` (
+CREATE TABLE IF NOT EXISTS `monitro`.`metrica` (
   `idMetrica` INT NOT NULL AUTO_INCREMENT,
   `metrica` VARCHAR(45) NULL,
   PRIMARY KEY (`idMetrica`))
@@ -193,9 +193,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `monitro`.`RegistroComponente`
+-- Table `monitro`.`registroComponente`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitro`.`RegistroComponente` (
+CREATE TABLE IF NOT EXISTS `monitro`.`registroComponente` (
   `idRegistroComponente` INT NOT NULL AUTO_INCREMENT,
   `fkTipoComponente_Componente` INT NOT NULL,
   `fkComponente` INT NOT NULL,
@@ -208,21 +208,21 @@ CREATE TABLE IF NOT EXISTS `monitro`.`RegistroComponente` (
   INDEX `fk_RegistroComponente_TipoRegistro1_idx` (`fkMetrica` ASC) VISIBLE,
   CONSTRAINT `fk_Componente_has_Servidor_Componente1`
     FOREIGN KEY (`fkTipoComponente_Componente` , `fkComponente`)
-    REFERENCES `monitro`.`Componente` (`fkTipoComponente` , `idComponente`)
+    REFERENCES `monitro`.`componente` (`fkTipoComponente` , `idComponente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_RegistroComponente_TipoRegistro1`
     FOREIGN KEY (`fkMetrica`)
-    REFERENCES `monitro`.`Metrica` (`idMetrica`)
+    REFERENCES `monitro`.`metrica` (`idMetrica`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `monitro`.`Processo`
+-- Table `monitro`.`processo`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitro`.`Processo` (
+CREATE TABLE IF NOT EXISTS `monitro`.`processo` (
   `idProcesso` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NULL,
   `usoRAM` DOUBLE NULL,
@@ -235,16 +235,16 @@ CREATE TABLE IF NOT EXISTS `monitro`.`Processo` (
   INDEX `fk_Processo_RegistroComponente1_idx` (`fkRegistroComponente` ASC, `fkTipoComponente_Componente` ASC, `fkComponente_RegistroComponente` ASC) VISIBLE,
   CONSTRAINT `fk_Processo_RegistroComponente1`
     FOREIGN KEY (`fkRegistroComponente` , `fkTipoComponente_Componente` , `fkComponente_RegistroComponente`)
-    REFERENCES `monitro`.`RegistroComponente` (`idRegistroComponente` , `fkTipoComponente_Componente` , `fkComponente`)
+    REFERENCES `monitro`.`registroComponente` (`idRegistroComponente` , `fkTipoComponente_Componente` , `fkComponente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `monitro`.`AlertaComponente`
+-- Table `monitro`.`alertaComponente`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitro`.`AlertaComponente` (
+CREATE TABLE IF NOT EXISTS `monitro`.`alertaComponente` (
   `idAlertaComponente` INT NOT NULL AUTO_INCREMENT,
   `min` INT NULL,
   `max` INT NULL,
@@ -256,12 +256,12 @@ CREATE TABLE IF NOT EXISTS `monitro`.`AlertaComponente` (
   INDEX `fk_AlertaComponente_TipoRegistro1_idx` (`fkMetrica` ASC) VISIBLE,
   CONSTRAINT `fk_AlertaComponente_Componente1`
     FOREIGN KEY (`fkComponente` , `fkTipoComponente_Componente`)
-    REFERENCES `monitro`.`Componente` (`idComponente` , `fkTipoComponente`)
+    REFERENCES `monitro`.`componente` (`idComponente` , `fkTipoComponente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_AlertaComponente_TipoRegistro1`
     FOREIGN KEY (`fkMetrica`)
-    REFERENCES `monitro`.`Metrica` (`idMetrica`)
+    REFERENCES `monitro`.`metrica` (`idMetrica`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -273,6 +273,8 @@ GRANT ALL ON `monitro`.* TO 'monitro-admin';
 GRANT SELECT ON TABLE `monitro`.* TO 'monitro-admin';
 GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE `monitro`.* TO 'monitro-admin';
 GRANT SELECT, INSERT, TRIGGER ON TABLE `monitro`.* TO 'monitro-admin';
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
