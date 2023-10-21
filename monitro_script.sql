@@ -69,9 +69,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `monitro`.`Cargo`
+-- Table `monitro`.`cargo`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitro`.`Cargo` (
+CREATE TABLE IF NOT EXISTS `monitro`.`cargo` (
   `idCargo` INT NOT NULL AUTO_INCREMENT,
   `nomeCargo` VARCHAR(45) NULL,
   PRIMARY KEY (`idCargo`))
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `monitro`.`usuario` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Usuario_Cargo1`
     FOREIGN KEY (`fkCargo`)
-    REFERENCES `monitro`.`Cargo` (`idCargo`)
+    REFERENCES `monitro`.`cargo` (`idCargo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
