@@ -266,6 +266,7 @@ CREATE TABLE IF NOT EXISTS `monitro`.`AlertaComponente` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+DROP USER IF exists 'monitro-admin'@'%';
 CREATE USER 'monitro-admin' IDENTIFIED BY 'kyvo_io';
 
 GRANT ALL ON `monitro`.* TO 'monitro-admin';
