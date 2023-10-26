@@ -23,11 +23,11 @@ CREATE TABLE IF NOT EXISTS `monitro`.`endereco` (
   `logradouro` VARCHAR(45) NULL,
   `cep` VARCHAR(45) NULL,
   `bairro` VARCHAR(45) NULL,
-  `latitude` INT NULL,
-  `numero` INT NULL,
+  `latitude` DOUBLE NULL,
+  `numero` DOUBLE NULL,
   `cidade` VARCHAR(90) NULL,
   `uf` CHAR(2) NULL,
-  `longitude` INT NULL,
+  `longitude` DOUBLE NULL,
   PRIMARY KEY (`idEndereco`))
 ENGINE = InnoDB;
 
@@ -283,22 +283,22 @@ use monitro;
 INSERT INTO tipoComponente (nomeTipo) VALUES ('CPU'), ('Memória RAM'), ('Placa de Rede'), ('Disco');
 insert into cargo (nomeCargo) VALUES ('Gerente Noc'), ('Suporte');
 INSERT INTO metrica (metrica) VALUES  
-	('USO (%)'),
-    ('UPLOAD (Mbps)'),
-    ('DOWNLOAD (Mbps)'),
-    ('USO (GB)'),
-	('LIVRE (GB)');
+	('USO CPU (%)'),
+    ('UPLOAD (MB)'),
+    ('DOWNLOAD (MB)'),
+    ('USO RAM (GB)'),
+    ('USO ARMAZENAMENTO (GB)');
     
 INSERT INTO empresa(nomeEmpresa, CNPJ)
 VALUES ('Futura Pesquisa','64907604000107')
 , ('Mais Pesquisa','98770156000156')
 , ('INPA','43376225000150');
 
-INSERT INTO endereco(logradouro, cep, bairro)
+INSERT INTO endereco(logradouro, cep, bairro, latitude, longitude)
 VALUES
-    ('Rua Manoel Paz de Oliveira', '61946030','Parque São João'),
-    ('Rua Miguel Ostrufka','83325615','Alto Tarumã'),
-    ('Rua Água Verde','44054128','Parque Ipê');
+    ('Rua Manoel Paz de Oliveira', '61946030','Parque São João', -22.799904, -43.3370793),
+    ('Rua Miguel Ostrufka','83325615','Alto Tarumã',-25.4132027, -49.1749135),
+    ('Rua Água Verde','44054128','Parque Ipê', -26.910837,  -49.1253785);
 
 INSERT INTO usuario (nomeUsuario, email, senha, fkEmpresa, fkCargo)
 VALUES

@@ -30,7 +30,6 @@ setupJar(){
 
     wget -O banco "https://raw.githubusercontent.com/Kyvo-io/scripts/main/monitro_script.sql"
     cat banco | sudo mysql
-
     sudo apt install maven
     rm -r -f monitro-java
     git clone https://github.com/Kyvo-io/monitro-java.git
@@ -97,9 +96,10 @@ if [ \“$get\” == \“3\” ];
 then
 abrirJar
 fi
-if [ \“$get\” == \“3\” ];
+if [ \“$get\” == \“4\” ];
 then
 obterProcessos
+menu
 fi
 }
 menu
