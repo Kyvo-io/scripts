@@ -57,12 +57,29 @@ abrirJar(){
     echo "jar não instalado"
     fi
 }
+obterProcessos(){
+    cd monitro-java
+    if [ $? = 0 ];
+    then
+    cd login-monitro
+    java -cp target/login-monitro-1.0-jar-with-dependencies.jar TesteLooca
+    if [ $? = 0 ];
+    then 
+    echo "abriu"
+    else 
+    echo "jar não instalado"
+    fi
+    else
+    echo "jar não instalado"
+    fi
+}
 menu(){
 echo "Bem vindo ao script de instalação em máquinas da Monitro!"
 
 echo "1 - Criar usuário"
 echo "2 - Instalar o JAR (Instalação do Banco e Java inclusa)"
 echo "3 - Abrir JAR"
+echo "4 - Obter processos"
 echo "Escolha o que deseja: "
 read get
 if [ \“$get\” == \“1\” ];
@@ -79,6 +96,10 @@ fi
 if [ \“$get\” == \“3\” ];
 then
 abrirJar
+fi
+if [ \“$get\” == \“3\” ];
+then
+obterProcessos
 fi
 }
 menu
