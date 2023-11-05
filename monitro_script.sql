@@ -51,6 +51,8 @@ CREATE TABLE IF NOT EXISTS `monitro`.`servidor` (
   `fkEndereco` INT NOT NULL,
   `sistemaOperacional` VARCHAR(45) NULL,
   `nomeServidor` VARCHAR(100) NULL,
+  `tempoAtividade` VARCHAR(45) NULL,
+  `tipoServidor` VARCHAR(45) NULL,
   `fkEmpresa` INT NOT NULL,
   PRIMARY KEY (`idServidor`, `fkEmpresa`),
   INDEX `fk_Servidor_Endereço1_idx` (`fkEndereco` ASC) VISIBLE,
@@ -242,43 +244,66 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `monitro`.`alertaComponente`
+-- Table `monitro`.`alerta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `monitro`.`alertaComponente` (
-  `idAlertaComponente` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `monitro`.`alerta` (
+  `idAlerta` INT NOT NULL AUTO_INCREMENT,
   `min` INT NULL,
   `max` INT NULL,
-  `fkComponente` INT NOT NULL,
-  `fkTipoComponente_Componente` INT NOT NULL,
   `fkMetrica` INT NOT NULL,
-  PRIMARY KEY (`idAlertaComponente`, `fkComponente`, `fkTipoComponente_Componente`, `fkMetrica`),
-  INDEX `fk_AlertaComponente_Componente1_idx` (`fkComponente` ASC, `fkTipoComponente_Componente` ASC) VISIBLE,
+  `fkTipoComponente` INT NOT NULL,
+  `fkServidor` INT NOT NULL,
+  `fkEmpresa` INT NOT NULL,
+  PRIMARY KEY (`idAlerta`, `fkMetrica`, `fkTipoComponente`, `fkServidor`, `fkEmpresa`),
   INDEX `fk_AlertaComponente_TipoRegistro1_idx` (`fkMetrica` ASC) VISIBLE,
-  CONSTRAINT `fk_AlertaComponente_Componente1`
-    FOREIGN KEY (`fkComponente` , `fkTipoComponente_Componente`)
-    REFERENCES `monitro`.`componente` (`idComponente` , `fkTipoComponente`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  INDEX `fk_alertaComponente_tipoComponente1_idx` (`fkTipoComponente` ASC) VISIBLE,
+  INDEX `fk_alertaComponente_servidor1_idx` (`fkServidor` ASC, `fkEmpresa` ASC) VISIBLE,
   CONSTRAINT `fk_AlertaComponente_TipoRegistro1`
     FOREIGN KEY (`fkMetrica`)
     REFERENCES `monitro`.`metrica` (`idMetrica`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_alertaComponente_tipoComponente1`
+    FOREIGN KEY (`fkTipoComponente`)
+    REFERENCES `monitro`.`tipoComponente` (`idTipoComponente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_alertaComponente_servidor1`
+    FOREIGN KEY (`fkServidor` , `fkEmpresa`)
+    REFERENCES `monitro`.`servidor` (`idServidor` , `fkEmpresa`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-DROP USER IF exists 'monitro-admin'@'%';
-CREATE USER 'monitro-admin' IDENTIFIED BY 'kyvo_io';
 
-GRANT ALL ON `monitro`.* TO 'monitro-admin';
-GRANT SELECT ON TABLE `monitro`.* TO 'monitro-admin';
-GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE `monitro`.* TO 'monitro-admin';
-GRANT SELECT, INSERT, TRIGGER ON TABLE `monitro`.* TO 'monitro-admin';
-
+-- -----------------------------------------------------
+-- Table `monitro`.`historicoAlerta`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `monitro`.`historicoAlerta` (
+  `idhistoricoAlerta` INT NOT NULL AUTO_INCREMENT,
+  `nivelAlerta` VARCHAR(45) NULL,
+  `dataAlerta` DATETIME NULL,
+  `fkServidor` INT NOT NULL,
+  `fkEmpresa` INT NOT NULL,
+  PRIMARY KEY (`idhistoricoAlerta`, `fkServidor`, `fkEmpresa`),
+  INDEX `fk_historicoAlerta_servidor1_idx` (`fkServidor` ASC, `fkEmpresa` ASC) VISIBLE,
+  CONSTRAINT `fk_historicoAlerta_servidor1`
+    FOREIGN KEY (`fkServidor` , `fkEmpresa`)
+    REFERENCES `monitro`.`servidor` (`idServidor` , `fkEmpresa`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- begin attached script 'script'
+DROP USER IF exists 'monitro-admin'@'%';
+CREATE USER 'monitro-admin' IDENTIFIED BY 'kyvo_io';
+GRANT SELECT ON TABLE `monitro`.* TO 'monitro-admin';
+GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE `monitro`.* TO 'monitro-admin';
+GRANT SELECT, INSERT, TRIGGER ON TABLE `monitro`.* TO 'monitro-admin';
+
 use monitro;
 INSERT INTO tipoComponente (nomeTipo) VALUES ('CPU'), ('Memória RAM'), ('Placa de Rede'), ('Disco');
 insert into cargo (nomeCargo) VALUES ('Gerente Noc'), ('Suporte');
@@ -306,10 +331,15 @@ VALUES
     ('Gabriel', 'gabriel@maispesquisa.com', 'liberta', 2, 2),
     ('Abel', 'abel@futurapesquisa.com', 'ferreira', 1, 1);
 
-INSERT INTO servidor (nomeServidor,fkEmpresa, fkEndereco, sistemaOperacional)
+INSERT INTO servidor (nomeServidor,fkEmpresa, fkEndereco, sistemaOperacional, tipoServidor)
 VALUES
-    ('Servidor Core',1, 1, 'Ubuntu Server'),
-    ('Servidor Aux',1, 2, 'Ubuntu Server'),
-    ('Balancer',1, 3, 'Windows');
+    ('Servidor Core',1, 1, 'Ubuntu Server', 'On-promisse'),
+    ('Servidor Aux',1, 2, 'Ubuntu Server', 'Cloud Azure'),
+    ('Balancer',1, 3, 'Windows', 'Cloud AWS');
+    
+INSERT INTO componente 
+VALUES (default,1,3),
+(default,1,2),
+(default,1,3);
     
 -- end attached script 'script'
