@@ -1,0 +1,4 @@
+DROP SCHEMA IF EXISTS `monitro` ;
+
+CREATE SCHEMA IF NOT EXISTS `monitro` DEFAULT CHARACTER SET utf8 ;
+USE `monitro` ;

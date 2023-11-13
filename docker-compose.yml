@@ -1,0 +1,10 @@
+version: '1.0'
+
+services:
+  banco:
+    container_name: banco_monitro_local
+    restart: always
+    image: monitro/monitro-banco:1.0
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
