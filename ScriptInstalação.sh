@@ -15,10 +15,5 @@ sleep 5
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.23.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 sleep 5
-sudo docker build -t monitro/monitro-banco:1.0 .
-sleep 5
-sudo docker compose up --detach
-sudo docker compose up -d
-sleep 5
-java -jar login-monitro.jar
+bash run_docker_jar.sh
 
