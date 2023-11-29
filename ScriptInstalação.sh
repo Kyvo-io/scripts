@@ -13,34 +13,32 @@ while true; do
 
     case $choice in
         1)
-                echo "*----------------------------*"
-	        echo "|   Atualizando pacotes...   |"
-                echo "*----------------------------*"
+            echo "*----------------------------*"
+            echo "|   Atualizando pacotes...   |"
+            echo "*----------------------------*"
             sudo apt update && sudo apt upgrade -y
-            
-                echo "*-------------------------------------*"
-                echo "| Baixando arquivos e dependências... |"
-	        echo "*-------------------------------------*"
+
+            echo "*-------------------------------------*"
+            echo "| Baixando arquivos e dependências... |"
+            echo "*-------------------------------------*"
             cd ~
-            rm -d -rf scripts
+            rm -rf scripts
             sleep 5
             git clone https://github.com/Kyvo-io/scripts.git
             cd scripts
             
-            java -version #verifica versao atual do java
-   	          if [ $? = 0 ]; #se retorno for igual a 0
-             then #entao,
-	        echo "*------------------------------------*"
-                echo "| java instalado” #print no terminal |"
-	        echo "*------------------------------------*"
-
-             else #se nao,
-
-	        echo "*--------------------*"
-                echo "| java não instalado |"
-	        echo "*--------------------*"
-
-            sudo apt install openjdk-17-jre -y ;;
+            java -version # verifica versão atual do Java
+            if [ $? -eq 0 ]; then
+                echo "*------------------------------------*"
+                echo "| java instalado                     |"
+                echo "*------------------------------------*"
+            else
+                echo "*--------------------*"
+                echo "| Java não instalado |"
+                echo "*--------------------*"
+                sudo apt install openjdk-17-jre -y
+            fi
+            ;;
         2)
             echo "*---------------------------------------*"
             echo "| Instalando Docker e Docker Compose... |"
@@ -59,13 +57,16 @@ while true; do
             mkdir logs
             sudo chmod 777 run_docker_jar.sh
             sudo chmod 777 login-monitro-jar
-            bash run_docker_jar.sh ;;
+            bash run_docker_jar.sh
+            ;;
         4)
             echo "*------------*"
             echo "| Saindo...  |"
             echo "*------------*"
-            exit 0 ;;
+            exit 0
+            ;;
         *)
-            echo "Opção inválida. Por favor, escolha uma opção válida." ;;
+            echo "Opção inválida. Por favor, escolha uma opção válida."
+            ;;
     esac
 done
