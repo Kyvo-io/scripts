@@ -31,13 +31,13 @@ while true; do
    	          if [ $? = 0 ]; #se retorno for igual a 0
              then #entao,
 	        echo "*------------------------------------*"
-                echo “| java instalado” #print no terminal |
+                echo "| java instalado” #print no terminal |"
 	        echo "*------------------------------------*"
 
              else #se nao,
 
 	        echo "*--------------------*"
-                echo “| java não instalado |” 
+                echo "| java não instalado |"
 	        echo "*--------------------*"
 
             sudo apt install openjdk-17-jre -y  ;;
