@@ -13,13 +13,13 @@ while true; do
 
     case $choice in
         1)
-            echo "*----------------------------*"
+                echo "*----------------------------*"
 	        echo "|   Atualizando pacotes...   |"
-            echo "*----------------------------*"
+                echo "*----------------------------*"
             sudo apt update && sudo apt upgrade -y
             
-            echo "*-------------------------------------*"
-            echo "| Baixando arquivos e dependências... |"
+                echo "*-------------------------------------*"
+                echo "| Baixando arquivos e dependências... |"
 	        echo "*-------------------------------------*"
             cd ~
             rm -d -rf scripts
@@ -31,21 +31,20 @@ while true; do
    	          if [ $? = 0 ]; #se retorno for igual a 0
              then #entao,
 	        echo "*------------------------------------*"
-            echo “| java instalado” #print no terminal |
+                echo “| java instalado” #print no terminal |
 	        echo "*------------------------------------*"
 
              else #se nao,
 
 	        echo "*--------------------*"
-            echo “| java não instalado |” 
+                echo “| java não instalado |” 
 	        echo "*--------------------*"
 
-            sudo apt install openjdk-17-jre -y #executa instalacao do java
-            ;;
+            sudo apt install openjdk-17-jre -y  ;;
         2)
             echo "*---------------------------------------*"
             echo "| Instalando Docker e Docker Compose... |"
-	        echo "*---------------------------------------*"
+            echo "*---------------------------------------*"
             sudo apt-get install docker.io -y
             sudo systemctl start docker
             sudo systemctl enable docker
