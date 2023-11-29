@@ -40,7 +40,8 @@ while true; do
                 echo "| java não instalado |"
 	        echo "*--------------------*"
 
-            sudo apt install openjdk-17-jre -y  ;;
+            sudo apt install openjdk-17-jre -y  
+	    ;;
         2)
             echo "*---------------------------------------*"
             echo "| Instalando Docker e Docker Compose... |"
