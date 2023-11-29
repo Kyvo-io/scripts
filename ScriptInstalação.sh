@@ -2,12 +2,12 @@
 
 while true; do
     echo "Bem-vindo à instalação da aplicação!"
-    echo "-------------------------------"
+    echo "------------------------------"
     echo "1. Instalar atualizações, arquivos e dependências"
     echo "2. Instalar Docker e Docker Compose"
     echo "3. Executar aplicação"
     echo "4. Sair"
-    echo "-------------------------------"
+    echo "------------------------------"
 
     read -p "Por favor, selecione uma opção (1-4): " choice
 
@@ -30,7 +30,7 @@ while true; do
             java -version # verifica versão atual do Java
             if [ $? -eq 0 ]; then
                 echo "*------------------------------------*"
-                echo "| java instalado                     |"
+                echo "| java instalado                    |"
                 echo "*------------------------------------*"
             else
                 echo "*--------------------*"
