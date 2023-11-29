@@ -18,6 +18,11 @@ while true; do
             echo "*----------------------------*"
             sudo apt update && sudo apt upgrade -y
 
+            echo "*----------------------------*"
+            echo "| Parando o serviço MySQL... |"
+            echo "*----------------------------*"
+            sudo service mysql stop
+            
             echo "*-------------------------------------*"
             echo "| Baixando arquivos e dependências... |"
             echo "*-------------------------------------*"
