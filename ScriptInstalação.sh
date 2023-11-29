@@ -1,4 +1,4 @@
-2#!/bin/bash
+#!/bin/bash
 
 while true; do
     echo "Bem-vindo à instalação da aplicação!"
