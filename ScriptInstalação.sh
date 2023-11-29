@@ -1,4 +1,4 @@
-2#!/bin/bash
+#!/bin/bash
 
 while true; do
     echo "Bem-vindo à instalação da aplicação!"
@@ -40,7 +40,7 @@ while true; do
                 echo "| java não instalado |"
 	        echo "*--------------------*"
 
-            sudo apt install openjdk-17-jre -y  ;;
+            sudo apt install openjdk-17-jre -y ;;
         2)
             echo "*---------------------------------------*"
             echo "| Instalando Docker e Docker Compose... |"
@@ -59,16 +59,13 @@ while true; do
             mkdir logs
             sudo chmod 777 run_docker_jar.sh
             sudo chmod 777 login-monitro-jar
-            bash run_docker_jar.sh
-            ;;
+            bash run_docker_jar.sh ;;
         4)
             echo "*------------*"
             echo "| Saindo...  |"
             echo "*------------*"
-            exit 0
-            ;;
+            exit 0 ;;
         *)
-            echo "Opção inválida. Por favor, escolha uma opção válida."
-            ;;
+            echo "Opção inválida. Por favor, escolha uma opção válida." ;;
     esac
 done
