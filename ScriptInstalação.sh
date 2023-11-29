@@ -15,8 +15,6 @@ while true; do
         1)
             echo "Atualizando pacotes..."
             sudo apt update && sudo apt upgrade -y
-            echo "Parando o serviço MySQL..."
-            sudo service mysql stop
             echo "Baixando arquivos e dependências..."
             cd ~
             rm -d -rf scripts
@@ -35,6 +33,9 @@ while true; do
             ;;
         3)
             echo "Executando a aplicação..."
+            mkdir logs
+            sudo chmod 777 run_docker_jar.sh
+            sudo chmod 777 login-monitro-jar
             bash run_docker_jar.sh
             ;;
         4)
