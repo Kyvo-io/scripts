@@ -13,17 +13,39 @@ while true; do
 
     case $choice in
         1)
-            echo "Atualizando pacotes..."
+            echo "*----------------------------*"
+	        echo "|   Atualizando pacotes...   |"
+            echo "*----------------------------*"
             sudo apt update && sudo apt upgrade -y
-            echo "Baixando arquivos e dependências..."
+            
+            echo "*-------------------------------------*"
+            echo "| Baixando arquivos e dependências... |"
+	        echo "*-------------------------------------*"
             cd ~
             rm -d -rf scripts
             sleep 5
             git clone https://github.com/Kyvo-io/scripts.git
             cd scripts
+            
+            java -version #verifica versao atual do java
+   	          if [ $? = 0 ]; #se retorno for igual a 0
+             then #entao,
+	        echo "*------------------------------------*"
+            echo “| java instalado” #print no terminal |
+	        echo "*------------------------------------*"
+
+             else #se nao,
+
+	        echo "*--------------------*"
+            echo “| java não instalado |” 
+	        echo "*--------------------*"
+
+            sudo apt install openjdk-17-jre -y #executa instalacao do java
             ;;
         2)
-            echo "Instalando Docker e Docker Compose..."
+            echo "*---------------------------------------*"
+            echo "| Instalando Docker e Docker Compose... |"
+	        echo "*---------------------------------------*"
             sudo apt-get install docker.io -y
             sudo systemctl start docker
             sudo systemctl enable docker
@@ -32,14 +54,18 @@ while true; do
             sudo chmod +x /usr/local/bin/docker-compose
             ;;
         3)
-            echo "Executando a aplicação..."
+            echo "*-----------------------------*"
+            echo "|  Executando a aplicação...  |"
+            echo "*-----------------------------*"
             mkdir logs
             sudo chmod 777 run_docker_jar.sh
             sudo chmod 777 login-monitro-jar
             bash run_docker_jar.sh
             ;;
         4)
-            echo "Saindo..."
+            echo "*------------*"
+            echo "| Saindo...  |"
+            echo "*------------*"
             exit 0
             ;;
         *)
