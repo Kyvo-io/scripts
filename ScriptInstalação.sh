@@ -27,18 +27,19 @@ while true; do
             git clone https://github.com/Kyvo-io/scripts.git
             cd scripts
             
-            java -version # verifica versão atual do Java
-            if [ $? -eq 0 ]; then
-                echo "*------------------------------------*"
-                echo "| java instalado                    |"
-                echo "*------------------------------------*"
-            else
-                echo "*--------------------*"
-                echo "| Java não instalado |"
-                echo "*--------------------*"
-                sudo apt install openjdk-17-jre -y
-            fi
-            ;;
+             if command -v java &> /dev/null; then
+            echo "*------------------------------------*"
+            echo "| Desinstalando Java existente...    |"
+            echo "*------------------------------------*"
+            sudo apt purge openjdk* -y
+            sudo apt autoremove -y
+        fi
+
+        echo "*------------------------------------*"
+        echo "|       Instalando Java...           |"
+        echo "*------------------------------------*"
+        sudo apt install openjdk-17-jre -y
+        ;;
         2)
             echo "*---------------------------------------*"
             echo "| Instalando Docker e Docker Compose... |"
