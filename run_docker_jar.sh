@@ -1,11 +1,8 @@
 #!/bin/bash
 echo "*--------------------------------------------*"
-echo "| Preparando o ambiente para a aplicação... |"
+echo "|   Preparando o ambiente para a aplicação   |"
+echo "|     Removendo containers existentes...     |"
 echo "*--------------------------------------------*"
-
-echo "*------------------------------------*"
-echo "| Removendo containers existentes... |"
-echo "*------------------------------------*"
 
 sudo docker container rm $(sudo docker container ls -aq) --force
 sleep 5
