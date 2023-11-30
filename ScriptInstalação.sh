@@ -44,10 +44,6 @@ while true; do
                 sudo apt install openjdk-17-jre -y
             fi
 
-        echo "*------------------------------------*"
-        echo "|       Instalando Java...           |"
-        echo "*------------------------------------*"
-        sudo apt install openjdk-17-jre -y
         ;;
         2)
             echo "*---------------------------------------*"
