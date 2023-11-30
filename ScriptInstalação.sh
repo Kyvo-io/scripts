@@ -32,13 +32,17 @@ while true; do
             git clone https://github.com/Kyvo-io/scripts.git
             cd scripts
             
-             if command -v java &> /dev/null; then
-            echo "*------------------------------------*"
-            echo "| Desinstalando Java existente...    |"
-            echo "*------------------------------------*"
-            sudo apt purge openjdk* -y
-            sudo apt autoremove -y
-        fi
+          java -version
+            if [ $? -eq 0 ]; then
+                echo "*------------------------------------*"
+                echo "| java instalado                     |"
+                echo "*------------------------------------*"
+            else
+                echo "*--------------------*"
+                echo "| Java não instalado |"
+                echo "*--------------------*"
+                sudo apt install openjdk-17-jre -y
+            fi
 
         echo "*------------------------------------*"
         echo "|       Instalando Java...           |"
